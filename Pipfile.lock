@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "ac1789e2c80282a162b1bcebd4312bab3e207945be06677d688dc0b57f1f8eb0"
+            "sha256": "79a15749af6fb7b30176e947d10d4854257801f92a885e9a22b967035bd1e6dc"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -16,6 +16,22 @@
         ]
     },
     "default": {
+        "autopep8": {
+            "hashes": [
+                "sha256:067959ca4a07b24dbd5345efa8325f5f58da4298dab0dde0443d5ed765de80cb",
+                "sha256:2913064abd97b3419d1cc83ea71f042cb821f87e45b9c88cad5ad3c4ea87fe0c"
+            ],
+            "index": "pypi",
+            "version": "==2.0.4"
+        },
+        "pycodestyle": {
+            "hashes": [
+                "sha256:259bcc17857d8a8b3b4a2327324b79e5f020a13c16074670f9c8c8f872ea76d0",
+                "sha256:5d1013ba8dc7895b548be5afb05740ca82454fd899971563d2ef625d090326f8"
+            ],
+            "markers": "python_version >= '3.8'",
+            "version": "==2.11.0"
+        },
         "pygame": {
             "hashes": [
                 "sha256:03879ec299c9f4ba23901b2649a96b2143f0a5d787f0b6c39469989e2320caf1",
@@ -75,8 +91,15 @@
                 "sha256:fe0228501ec616779a0b9c4299e837877783e18df294dd690b9ab0eed3d8aaab"
             ],
             "index": "pypi",
-            "markers": "python_version >= '3.6'",
             "version": "==2.5.2"
+        },
+        "tomli": {
+            "hashes": [
+                "sha256:939de3e7a6161af0c887ef91b7d41a53e7c5a1ca976325f429cb46ea9bc30ecc",
+                "sha256:de526c12914f0c550d15924c62d72abc48d6fe7364aa87328337a31007fe8a4f"
+            ],
+            "markers": "python_version < '3.11'",
+            "version": "==2.0.1"
         }
     },
     "develop": {}
