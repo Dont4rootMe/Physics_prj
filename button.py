@@ -6,12 +6,12 @@ class Button():
         """Инициализирует атрибуты кнопки."""
         self.screen = app.screen
         self.screen_rect = self.screen.get_rect()
-    
+        self.font = 'corbel'
         # Назначение размеров и свойств кнопок.
         self.width, self.height = button_size
-        self.button_color = (100, 100, 100)
-        self.text_color = (255, 255, 255)
-        self.font = pygame.font.SysFont(None, 48)
+        self.button_color = (240, 240, 240)
+        self.text_color = (0, 0, 0)
+        self.font = pygame.font.SysFont(self.font, 36, bold=True)
 
         # Построение объекта rect кнопки и выравнивание по центру экрана.
         self.rect = pygame.Rect(*position, self.width, self.height)
