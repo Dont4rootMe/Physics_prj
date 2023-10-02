@@ -4,6 +4,7 @@ from button import Button
 
 class MenuScreen():
     def __init__(self, app):
+        self.app = app
         self.screen = app.screen
         self.bg_color = (255, 255, 255)
         self.font = 'corbel'
@@ -52,5 +53,7 @@ class MenuScreen():
     def _check_buttons(self, mouse_position):
         for index, button in enumerate(self.buttons):
             if button.rect.collidepoint(mouse_position):
-                if index == 3:
+                if index == 2:
+                    self.app.active_screen = self.app.authors_screen
+                elif index == 3:
                     sys.exit()
