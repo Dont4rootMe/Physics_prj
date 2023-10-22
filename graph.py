@@ -69,13 +69,15 @@ class Graph:
 
         self.screen.fill((240, 240, 240), pygame.Rect(*(self.position[0], self.position[1] + sum(self.columns_height) * self.size[1]), self.size[0], (1 - sum(self.columns_height)) * self.size[1]))
         
-        for index, column_height in enumerate(self.columns_height if not self.reversed else reversed(self.columns_height)):
-            self.screen.fill(self.color, pygame.Rect(*(self.columns_x[index], self.position[1] + self.size[1] - column_height * self.size[1]), 
-                                                      self.size[0] / self.number_of_values, column_height * self.size[1]), pygame.BLEND_RGBA_MULT)
-
         if self.active_filling:
             for delimiter in self.vertical_delimeters:
                 self.screen.fill((200, 200, 200), delimiter)
+        
+        for index, column_height in enumerate(self.columns_height if not self.reversed else reversed(self.columns_height)):
+            position = (self.columns_x[index], self.position[1] + self.size[1] - column_height * self.size[1])
+            size = (self.size[0] / self.number_of_values, column_height * self.size[1])
+            self.screen.fill(self.color, pygame.Rect(*position, *size), pygame.BLEND_RGBA_MULT)
+            pygame.draw.rect(self.app.screen, (0, 0, 0), [*position, *size], 1)
         
         self.screen.fill((0,0,0),self.x_axis)
         self.screen.fill((0,0,0),self.y_axis)
