@@ -1,7 +1,7 @@
 import pygame
 import sys
 from button import Button
-
+import webbrowser
 class MenuScreen():
     def __init__(self, app):
         self.app = app
@@ -55,6 +55,8 @@ class MenuScreen():
             if button.rect.collidepoint(mouse_position):
                 if index == 0:
                     self.app.active_screen = self.app.demo_screen
+                elif index == 1:
+                    webbrowser.open('https://drive.google.com/file/d/1GpEBMSkq69HSRGhU3bnuoGEWHxa5YXbL/view?usp=sharing')
                 if index == 2:
                     self.app.active_screen = self.app.authors_screen
                 elif index == 3:
