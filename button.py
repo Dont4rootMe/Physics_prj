@@ -1,5 +1,5 @@
 import pygame.font
-
+import numpy as np
 class Button():
     
     def __init__(self, app, msg, position, button_size, font_size=36, font='corbel'):
@@ -8,14 +8,14 @@ class Button():
         self.screen_rect = self.screen.get_rect()
         self.font = font
         # Назначение размеров и свойств кнопок.
-        self.width, self.height = button_size
+        self.width, self.height = np.array(button_size) * app.scale
         self.button_color = (240, 240, 240)
         self.text_color = (0, 0, 0)
-        self.font = pygame.font.SysFont(self.font, font_size, bold=True)
+        self.font = pygame.font.SysFont(self.font, int(font_size * app.scale), bold=True)
         self.active = False
 
         # Построение объекта rect кнопки и выравнивание по центру экрана.
-        self.rect = pygame.Rect(*position, self.width, self.height)
+        self.rect = pygame.Rect(*(np.array(position) * app.scale), self.width, self.height)
         
         # Сообщение кнопки создается только один раз.
         self._prep_msg(msg)

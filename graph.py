@@ -1,10 +1,11 @@
 import pygame
-
+import numpy as np
 class Graph:
     def __init__(self, app, values, position, size, active_filling, name, color, height=1) -> None:
         self.app = app
         self.color = color
         self.screen = app.screen
+        self.scale = app.scale
         self.position = position
         self.font = 'Corbel'
         self.graph_font = pygame.font.SysFont('couriernew', 28)
@@ -86,7 +87,7 @@ class Graph:
         if self.position[0] < mouse_position[0] < self.position[0] + self.size[0] and \
                self.position[1] < mouse_position[1] < self.position[1] + self.size[1]:
                 column_index = (mouse_position[0] - self.position[0]) // (self.size[0] // self.number_of_values)
-                self.columns_height[column_index] = min(1 - (mouse_position[1] - self.position[1]) / self.size[1], 1 - sum(self.columns_height))
+                self.columns_height[int(column_index)] = min(1 - (mouse_position[1] - self.position[1]) / self.size[1], 1 - sum(self.columns_height))
         self.active_filling = sum(self.columns_height) < 1
                 
     def move(self, position):

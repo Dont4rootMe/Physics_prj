@@ -1,12 +1,12 @@
 import pygame
-
+import numpy as np
 class OptionBox():
 
-    def __init__(self, x, y, w, h, color, highlight_color, font, option_list, selected = 0, back=False):
+    def __init__(self, x, y, w, h, color, highlight_color, font_size, option_list, app, selected = 0, back=False):
         self.color = color
         self.highlight_color = highlight_color
-        self.rect = pygame.Rect(x, y, w, h)
-        self.font = font
+        self.rect = pygame.Rect(*(np.array((x, y, w, h)) * app.scale))
+        self.font = pygame.font.SysFont('corbel', int(font_size * app.scale), bold=True)
         self.option_list = option_list
         self.selected = selected
         self.draw_menu = False

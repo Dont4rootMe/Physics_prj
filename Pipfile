@@ -8,6 +8,7 @@ pygame = "*"
 autopep8 = "*"
 pygame-menu = "*"
 pyinstaller = "*"
+numpy = "*"
 
 [dev-packages]
 

@@ -2,15 +2,17 @@ import pygame
 import sys
 from button import Button
 import webbrowser
+import numpy as np
 class MenuScreen():
     def __init__(self, app):
         self.app = app
+        self.scale = self.app.scale
         self.screen = app.screen
         self.bg_color = (255, 255, 255)
         self.font = 'corbel'
-        self.little_font = pygame.font.SysFont(self.font, 35)
-        self.middle_font = pygame.font.SysFont(self.font, 40, bold=True)
-        self.big_font = pygame.font.SysFont(self.font, 50)
+        self.little_font = pygame.font.SysFont(self.font, int(35 * self.app.scale))
+        self.middle_font = pygame.font.SysFont(self.font, int(40 * self.app.scale), bold=True)
+        self.big_font = pygame.font.SysFont(self.font, int(50 * self.app.scale))
         self.msu_name = "Московский Государственный Университет им. М.В. Ломоносова"
         self.faculty_name = "Факультет вычислительной математики и кибернетики"
         self.demonstration_label = "Компьютерная демонстрация по курсу"
@@ -28,17 +30,19 @@ class MenuScreen():
             else:
                 self.strings_surfaces.append(self.big_font.render(string, False, (0, 0, 0)))
         self.positions = [(400, 100), (500, 150), (700, 250), (800, 300), (550, 400), (670, 470)]
-        self.cmc_logo = pygame.transform.scale(pygame.image.load("cmc_logo.jpg"), (140, 140))
-        self.msu_logo = pygame.transform.scale(pygame.image.load("msu_logo.jpg"), (150, 150))
-        self.buttons = [Button(app, "Демонстрация", (750, 600), (400, 80)), Button(app, "Теория", (750, 700), (400, 80)),
-                        Button(app, "Авторы", (750, 800), (400, 80)), Button(app, "Выход", (750, 900), (400, 80))]
+        self.cmc_logo = pygame.transform.scale(pygame.image.load("cmc_logo.jpg"), np.array((140, 140)) * self.scale)
+        self.msu_logo = pygame.transform.scale(pygame.image.load("msu_logo.jpg"), np.array((150, 150)) * self.scale)
+        self.buttons = [Button(app, "Демонстрация", (750, 600), (400, 80)), 
+                        Button(app, "Теория", (750, 700), (400, 80)),
+                        Button(app, "Авторы", (750, 800), (400, 80)), 
+                         Button(app, "Выход", (750, 900), (400, 80))]
     
     def _update_screen(self):
         self.screen.fill(self.bg_color)
         for index, surface in enumerate(self.strings_surfaces):
-            self.screen.blit(surface, self.positions[index])
-        self.screen.blit(self.cmc_logo, (1600, 80))
-        self.screen.blit(self.msu_logo, (180, 80))
+            self.screen.blit(surface, np.array(self.positions[index]) * self.scale)
+        self.screen.blit(self.cmc_logo, np.array((1600, 80)) * self.scale)
+        self.screen.blit(self.msu_logo, np.array((180, 80)) * self.scale)
         for button in self.buttons:
             button.draw_button()
         

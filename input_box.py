@@ -1,18 +1,19 @@
 import pygame as pg
+import numpy as np
 pg.init()
 
 COLOR_INACTIVE = pg.Color('black')
 COLOR_ACTIVE = pg.Color('blue')
-FONT = pg.font.SysFont('couriernew', 35, bold=True)
 
 
 class InputBox:
 
-    def __init__(self, x, y, w, h, text=''):
-        self.rect = pg.Rect(x, y, w, h)
+    def __init__(self, x, y, w, h, app, text=''):
+        self.rect = pg.Rect(*(np.array((x, y, w, h)) * app.scale))
         self.color = COLOR_INACTIVE
         self.text = text
-        self.txt_surface = FONT.render(text, True, self.color)
+        self.font = pg.font.SysFont('couriernew', int(35 * app.scale), bold=True)
+        self.txt_surface = self.font.render(text, True, self.color)
         self.active = False
 
     def handle_event(self, event):
@@ -36,7 +37,7 @@ class InputBox:
                 else:
                     self.text += event.unicode
                 # Re-render the text.
-                self.txt_surface = FONT.render(self.text, True, self.color)
+                self.txt_surface = self.font.render(self.text, True, self.color)
             return save
 
     def update(self):

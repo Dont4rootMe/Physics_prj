@@ -5,20 +5,22 @@ from graph import Graph
 import time
 from option_box import OptionBox
 from input_box import InputBox
+import numpy as np
 class DemoScreen():
     def __init__(self, app):
         self.app = app
         self.screen = app.screen
+        self.scale = app.scale
         self.speed = 0.5
         self.bg_color = (255, 255, 255)
         self.font = 'corbel'
         self.input_text = 'Кол-во значений случайной величины:'
-        self.little_font = pygame.font.SysFont(self.font, 35)
-        self.middle_font = pygame.font.SysFont(self.font, 40, bold=True)
-        self.big_font = pygame.font.SysFont(self.font, 50)
-        self.left_graph_position = (150, 150)
-        self.right_graph_position = (1000, 150)
-        self.graph_size = (650, 300)
+        self.little_font = pygame.font.SysFont(self.font, int(35 * self.app.scale))
+        self.middle_font = pygame.font.SysFont(self.font, int(40 * self.app.scale), bold=True)
+        self.big_font = pygame.font.SysFont(self.font, int(50 * self.app.scale))
+        self.left_graph_position = (150 * self.app.scale, 150 * self.app.scale)
+        self.right_graph_position = (1000 * self.app.scale, 150 * self.app.scale)
+        self.graph_size = np.array((650, 300)) * self.scale
         self.left_graph = Graph(app, [i for i in range(10)], self.left_graph_position, self.graph_size, True, str(1), (0, 250, 0, 10))
         self.right_graph = Graph(app, [i for i in range(10)], self.right_graph_position, self.graph_size, True, str(2), (250, 0, 0, 10))
         self.result_graph = None
@@ -29,19 +31,19 @@ class DemoScreen():
                         Button(app, "Перезапустить", (1600, 900), (250, 70), font_size=30),
                         Button(app, "Пауза", (1600, 700), (250, 70), font_size=30)]
         self.option_boxes_positions = ((500, 600), (1350, 600), (1600, 800))
+        
         self.option_boxes = [OptionBox(
-            *self.option_boxes_positions[0], 180, 60, (240, 240, 240), (100, 200, 255), pygame.font.SysFont(self.font, 25, bold=True), 
-            ["Шаблоны", "Равномерное"]),
+            *self.option_boxes_positions[0], 180, 60, (240, 240, 240), (100, 200, 255), 25, 
+            ["Шаблоны", "Равномерное"], app=app),
                             OptionBox(
-            *self.option_boxes_positions[1], 180, 60, (240, 240, 240), (100, 200, 255), pygame.font.SysFont(self.font, 25, bold=True), 
-            ["Шаблоны", "Равномерное"]),
+            *self.option_boxes_positions[1], 180, 60, (240, 240, 240), (100, 200, 255), 25, 
+            ["Шаблоны", "Равномерное"], app=app),
                             OptionBox(
-            *self.option_boxes_positions[2], 250, 70, (240, 240, 240), (100, 200, 255), pygame.font.SysFont(self.font, 30, bold=True),
-            ['Скорость', 'x1', 'x2', 'x4', 'x8'], back=True
-                            )
+            *self.option_boxes_positions[2], 250, 70, (240, 240, 240), (100, 200, 255), 30,
+            ['Скорость', 'x1', 'x2', 'x4', 'x8'], app=app, back=True)
         ]
         self.input_text_surface = self.little_font.render(self.input_text,  False, (0, 0, 0))
-        self.input_boxes = [InputBox(700, 515, 140, 50), InputBox(1550, 515, 140, 50)]
+        self.input_boxes = [InputBox(700, 515, 140, 50, app), InputBox(1550, 515, 140, 50, app)]
 
         self.distr_text = self.little_font.render("Типовые распределения:", False, (0, 0, 0))
 
@@ -61,14 +63,14 @@ class DemoScreen():
             self.result_graph.draw_graph()
 
         if self.left_graph.active_filling:
-            self.screen.blit(self.distr_text, (100, 610))
-            self.screen.blit(self.input_text_surface, (100, 520))
+            self.screen.blit(self.distr_text, np.array((100, 610)) * self.scale)
+            self.screen.blit(self.input_text_surface, np.array((100, 520)) * self.scale)
             self.input_boxes[0].draw(self.app.screen)
         
         if self.right_graph.active_filling:
-            self.screen.blit(self.distr_text, (950, 610))
-            self.screen.blit(self.input_text_surface, (950, 520))
-            self.screen.blit(self.checkbox_text, (950, 700))
+            self.screen.blit(self.distr_text, np.array((950, 610)) * self.scale)
+            self.screen.blit(self.input_text_surface, np.array((950, 520)) * self.scale)
+            self.screen.blit(self.checkbox_text, np.array((950, 700)) * self.scale)
             self.input_boxes[1].draw(self.app.screen)
             self.checkbox.draw_button()
         
@@ -195,7 +197,7 @@ class DemoScreen():
     def build_result_graph_plot(self):
         distribution = self.build_distribution()
         return Graph(self.app, list(range(0, max(distribution.keys()) + 1)), 
-                             (150, 600), (1000, 300), False, "суммы", 
+                             np.array((150, 600)) * self.scale, np.array((1000, 300)) * self.scale, False, "суммы", 
                              (0, 0, 0), height=max(distribution.values()))
 
     def build_distribution(self):

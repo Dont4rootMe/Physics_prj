@@ -8,9 +8,9 @@ class AuthorsScreen():
         self.screen = app.screen
         self.bg_color = (255, 255, 255)
         self.font = 'corbel'
-        self.little_font = pygame.font.SysFont(self.font, 35)
-        self.middle_font = pygame.font.SysFont(self.font, 40, bold=True)
-        self.big_font = pygame.font.SysFont(self.font, 50)
+        self.little_font = pygame.font.SysFont(self.font, int(35 * self.app.scale))
+        self.middle_font = pygame.font.SysFont(self.font, int(40 * self.app.scale), bold=True)
+        self.big_font = pygame.font.SysFont(self.font, int(50  * self.app.scale))
         self.strings = ["Московский Государственный Университет им. М.В. Ломоносова",
                         "Факультет вычислительной математики и кибернетики", 
                         "Лектор: Андреев Анатолий Васильевич",
@@ -27,13 +27,21 @@ class AuthorsScreen():
         
         self.text_positions = [(400, 100), (500, 150), (670, 850), (600, 790), (395, 720), (1230, 720)]
         
-        self.pictures = [pygame.transform.scale(pygame.image.load("cmc_logo.jpg"), (140, 140)),
-                         pygame.transform.scale(pygame.image.load("msu_logo.jpg"), (150, 150)),
-                         pygame.transform.scale(pygame.image.load("me.jpg"), (400, 400)),
-                         pygame.transform.scale(pygame.image.load("artem.jpg"), (400, 400))]
+        self.pictures = [pygame.transform.scale(pygame.image.load("cmc_logo.jpg"), 
+                                                (140 * self.app.scale, 140 * self.app.scale)),
+                         pygame.transform.scale(pygame.image.load("msu_logo.jpg"), 
+                                                (150 * self.app.scale, 150 * self.app.scale)),
+                         pygame.transform.scale(pygame.image.load("me.jpg"), 
+                                                (400 * self.app.scale, 400 * self.app.scale)),
+                         pygame.transform.scale(pygame.image.load("artem.jpg"), 
+                                                (400 * self.app.scale, 400 * self.app.scale))]
         
-        self.pictures_positions = [(1600, 80), (180, 80), (340, 300), (1160, 300)]
-        self.buttons = [Button(app, "Назад", (1300, 900), (300, 80))]
+        self.pictures_positions = [(1600 * self.app.scale, 80 * self.app.scale), 
+                                   (180 * self.app.scale, 80 * self.app.scale), 
+                                   (340 * self.app.scale, 300 * self.app.scale), 
+                                   (1160 * self.app.scale, 300 * self.app.scale)]
+        self.buttons = [Button(app, "Назад", (1300 * self.app.scale, 900 * self.app.scale), 
+                               (300 * self.app.scale, 80 * self.app.scale))]
     
     def _update_screen(self):
         self.screen.fill(self.bg_color)

@@ -16,7 +16,7 @@ IMPORTANT: Do NOT post this list to the issue-tracker. Use it as a basis for
 
 missing module named pyimod02_importers - imported by C:\Users\Profe\.virtualenvs\Physics_prj-X-6xLN4N\Lib\site-packages\PyInstaller\hooks\rthooks\pyi_rth_pkgres.py (delayed), C:\Users\Profe\.virtualenvs\Physics_prj-X-6xLN4N\Lib\site-packages\PyInstaller\hooks\rthooks\pyi_rth_pkgutil.py (delayed)
 missing module named grp - imported by shutil (optional), tarfile (optional), pathlib (delayed, optional), subprocess (optional)
-missing module named pwd - imported by posixpath (delayed, conditional), shutil (optional), tarfile (optional), pathlib (delayed, conditional, optional), subprocess (optional), netrc (delayed, conditional), getpass (delayed)
+missing module named pwd - imported by shutil (optional), tarfile (optional), pathlib (delayed, conditional, optional), subprocess (optional), posixpath (delayed, conditional), webbrowser (delayed), netrc (delayed, conditional), getpass (delayed)
 missing module named pep517 - imported by importlib.metadata (delayed)
 missing module named 'org.python' - imported by copy (optional), xml.sax (delayed, conditional)
 missing module named posix - imported by shutil (conditional), os (conditional, optional)
