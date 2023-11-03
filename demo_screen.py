@@ -6,6 +6,7 @@ import time
 from option_box import OptionBox
 from input_box import InputBox
 import numpy as np
+
 class DemoScreen():
     def __init__(self, app):
         self.app = app
@@ -22,16 +23,19 @@ class DemoScreen():
         self.right_graph_position = (1000 * self.app.scale, 150 * self.app.scale)
         self.graph_size = np.array((650, 300)) * self.scale
         self.left_graph = Graph(app, [i for i in range(10)], self.left_graph_position, self.graph_size, True, str(1), (0, 250, 0, 10))
-        self.right_graph = Graph(app, [i for i in range(10)], self.right_graph_position, self.graph_size, True, str(2), (250, 0, 0, 10))
+        self.right_graph = Graph(app, [i for i in range(10)], self.right_graph_position, self.graph_size, True, str(2), (250, 0, 0, 10), right=True)
         self.result_graph = None
         self.active_summing = False
+        self.step = 1
         self.pause = False
         self.buttons = [Button(app, "Назад", (1300, 900), (250, 70), font_size=30), 
                         Button(app, "Следующий шаг", (1300, 800), (250, 70), font_size=30),
                         Button(app, "Перезапустить", (1600, 900), (250, 70), font_size=30),
-                        Button(app, "Пауза", (1600, 700), (250, 70), font_size=30)]
+                        Button(app, "Пауза", (1600, 700), (250, 70), font_size=30),
+                        Button(app, "Формула", (1600, 600), (250, 70), font_size=30)]
         self.option_boxes_positions = ((500, 600), (1350, 600), (1600, 800))
-        
+        self.show_formula = False
+        self.formula_image = pygame.transform.scale(pygame.image.load("CodeCogsEqn.png"), np.array((100 * 7.6, 100)) * self.scale)
         self.option_boxes = [OptionBox(
             *self.option_boxes_positions[0], 180, 60, (240, 240, 240), (100, 200, 255), 25, 
             ["Шаблоны", "Равномерное"], app=app),
@@ -49,14 +53,17 @@ class DemoScreen():
 
         self.checkbox_text = self.little_font.render("Дублировать 1-е распределение:", False, (0, 0, 0))
         self.checkbox = Button(self.app, '✖', (1460, 685), (60, 60), font_size=30, font='SegoeUISymbol')
-
+        self.checkbox2_text = self.little_font.render("Показать распределение Гаусса:", False, (0, 0, 0))
+        self.checkbox_2 = Button(self.app, '✖', (1100, 620), (60, 60), font_size=30, font='SegoeUISymbol')
+        self.time_check = time.time()
+        self.norm_img = pygame.transform.scale(pygame.image.load("norm.png"), np.array((420, 300)) * self.scale)
+        self.show_norm = False
 
     def _update_screen(self):
         self.screen.fill(self.bg_color)
         for button in self.buttons:
             button.draw_button()
-        if self.left_graph is not None:
-            self.left_graph.draw_graph()
+        self.left_graph.draw_graph()
         if self.right_graph is not None:
             self.right_graph.draw_graph()
         if self.result_graph is not None:
@@ -74,12 +81,25 @@ class DemoScreen():
             self.input_boxes[1].draw(self.app.screen)
             self.checkbox.draw_button()
         
+        if self.result_graph:
+            self.screen.blit(self.checkbox2_text, np.array((600, 630)) * self.scale)
+            self.checkbox_2.draw_button()
+        
+        if self.show_formula:
+            self.screen.blit(self.formula_image, np.array((840, 585)) * self.scale)
         
         for index, graph in enumerate((self.left_graph, self.right_graph)):
             if graph.active_filling:
                 self.option_boxes[index].draw(self.screen)
-
+        self.step_text = self.little_font.render(f"Шаг: {self.step}", False, (0, 0, 0))
+        self.step_left_text = self.little_font.render(f"Шагов доступно: {max(0, 20 - self.step)}", False, (0, 0, 0))
+        if self.result_graph:
+            self.screen.blit(self.step_text, np.array((1600, 20)) * self.scale)
+            self.screen.blit(self.step_left_text, np.array((1600, 60)) * self.scale)
         self.option_boxes[2].draw(self.screen)
+        if self.show_norm:
+            self.screen.blit(self.norm_img, np.array((440, 700)) * self.scale)
+
         if self.active_summing:
             self.summing_process()
         
@@ -103,18 +123,17 @@ class DemoScreen():
                                             self.graph_size, True, str(1), (0, 250, 0, 10))
                     if self.checkbox.active:
                         self.right_graph = Graph(self.app, [i for i in range(int(response))], self.right_graph_position, 
-                                            self.graph_size, True, str(1), (250, 0, 0, 10))
+                                            self.graph_size, True, str(1), (250, 0, 0, 10), right=True)
                         self.right_graph._check_mousebutton((0, 0))
 
             if self.right_graph.active_filling:
                 response = self.input_boxes[1].handle_event(event)
                 if response:
                     self.right_graph = Graph(self.app, [i for i in range(int(response))], self.right_graph_position, 
-                                            self.graph_size, True, str(1), (250, 0, 0, 10))
+                                            self.graph_size, True, str(1), (250, 0, 0, 10), right=True)
                     
                     
-        self.speed = (self.option_boxes[2].selected + 1) / 2
-        
+        self.speed = 1/4 if self.option_boxes[2].selected < 2 else (self.option_boxes[2].selected + 1) / 4
         self.option_boxes[2].update(events)
 
         for index, graph in enumerate((self.left_graph, self.right_graph)):
@@ -149,6 +168,9 @@ class DemoScreen():
                     else:
                         button.button_color = (230, 230, 230)
                     button._prep_msg('Пауза')
+                if index == 4:
+                    self.show_formula = not self.show_formula
+
         if self.checkbox.rect.collidepoint(mouse_position):
             if not self.checkbox.active:
                 self.checkbox._prep_msg("✓")
@@ -158,6 +180,16 @@ class DemoScreen():
             else:
                 self.checkbox._prep_msg("✖")
             self.checkbox.active = not self.checkbox.active
+        
+        
+        if self.checkbox_2.rect.collidepoint(mouse_position):
+            if not self.checkbox_2.active:
+                self.checkbox_2._prep_msg("✓")
+                self.show_norm = True
+            else:
+                self.checkbox_2._prep_msg("✖")
+                self.show_norm = False
+            self.checkbox_2.active = not self.checkbox_2.active
                     
     
     def _check_graphs(self, mouse_position):
@@ -169,6 +201,8 @@ class DemoScreen():
             self.active_summing = True
             
     def summing_process(self):
+        if time.time() - self.time_check < min(2, 1 / 4 / self.speed ** 2):
+            return
         self.summed = set()
         if self.result_graph is None:
             col_height = max(max(self.left_graph.columns_height), max(self.right_graph.columns_height))
@@ -180,7 +214,7 @@ class DemoScreen():
                     self.left_graph.columns_height = save_cols
                 else:
                     self.right_graph = Graph(self.app, graph.xticks.copy(), graph.position, graph.size,
-                                        False, graph.name, graph.color, col_height)
+                                        False, graph.name, graph.color, col_height, right=True)
                     self.right_graph.columns_height = save_cols
             self.result_graph = self.build_result_graph_plot()
             self._update_screen()
@@ -191,14 +225,14 @@ class DemoScreen():
         self.right_graph.move((self.right_graph.position[0] - self.speed * (not self.pause), self.right_graph.position[1]))
         self.left_graph.move((self.left_graph.position[0] + self.speed * (not self.pause), self.left_graph.position[1]))
         self.check_intersection()
-        if self.right_graph.position[0] + self.right_graph.size[0] + 200 < self.left_graph.position[0]:
+        if self.right_graph.position[0] + self.right_graph.size[0] + 200 * self.scale < self.left_graph.position[0]:
             self.active_summing = False
     
     def build_result_graph_plot(self):
         distribution = self.build_distribution()
         return Graph(self.app, list(range(0, max(distribution.keys()) + 1)), 
-                             np.array((150, 600)) * self.scale, np.array((1000, 300)) * self.scale, False, "суммы", 
-                             (0, 0, 0), height=max(distribution.values()))
+                             np.array((150, 700)) * self.scale, np.array((1000, 300)) * self.scale, False, "суммы", 
+                             (100, 100, 100), height=max(distribution.values()), result=True)
 
     def build_distribution(self):
         distribution = dict()
@@ -228,12 +262,14 @@ class DemoScreen():
             self.left_graph.move((self.left_graph.position[0] + delta, self.left_graph.position[1]))
             self._update_screen()
             pygame.display.flip()
-            time.sleep(1 / 4 / self.speed ** 2)
+            self.time_check = time.time()
+
 
     def start_new_lap(self):
         if self.result_graph is None or sum(self.result_graph.columns_height) < 0.99:
             return
-        self.right_graph = Graph(self.app, self.result_graph.xticks, self.right_graph_position, self.graph_size, False, "суммы", (250, 0, 0, 10))
+        self.step += 1
+        self.right_graph = Graph(self.app, self.result_graph.xticks, self.right_graph_position, self.graph_size, False, "суммы", (250, 0, 0, 10), right=True)
         self.right_graph.columns_height = self.result_graph.columns_height
         self.right_graph.move(self.right_graph_position)
         self.right_graph.size = self.graph_size
@@ -247,8 +283,9 @@ class DemoScreen():
         self.result_graph = None
     
     def reset(self):
+        self.step = 1
         self.left_graph = Graph(self.app, [i for i in range(10)], self.left_graph_position, self.graph_size, True, str(1), (0, 250, 0, 10))
-        self.right_graph = Graph(self.app, [i for i in range(10)], self.right_graph_position, self.graph_size, True, str(2), (250, 0, 0, 10))
+        self.right_graph = Graph(self.app, [i for i in range(10)], self.right_graph_position, self.graph_size, True, str(2), (250, 0, 0, 10), right=True)
         self.result_graph = None
         self.active_summing = False
         for box in self.option_boxes:

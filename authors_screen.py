@@ -1,10 +1,11 @@
 import pygame
 import sys
 from button import Button
-
+import numpy as np
 class AuthorsScreen():
     def __init__(self, app):
         self.app = app
+        self.scale = app.scale
         self.screen = app.screen
         self.bg_color = (255, 255, 255)
         self.font = 'corbel'
@@ -25,7 +26,7 @@ class AuthorsScreen():
             else:
                 self.strings_surfaces.append(self.little_font.render(string, False, (0, 0, 0)))
         
-        self.text_positions = [(400, 100), (500, 150), (670, 850), (600, 790), (395, 720), (1230, 720)]
+        self.text_positions = np.array(((400, 100), (500, 150), (670, 850), (600, 790), (395, 720), (1230, 720)))
         
         self.pictures = [pygame.transform.scale(pygame.image.load("cmc_logo.jpg"), 
                                                 (140 * self.app.scale, 140 * self.app.scale)),
@@ -40,13 +41,12 @@ class AuthorsScreen():
                                    (180 * self.app.scale, 80 * self.app.scale), 
                                    (340 * self.app.scale, 300 * self.app.scale), 
                                    (1160 * self.app.scale, 300 * self.app.scale)]
-        self.buttons = [Button(app, "Назад", (1300 * self.app.scale, 900 * self.app.scale), 
-                               (300 * self.app.scale, 80 * self.app.scale))]
+        self.buttons = [Button(app, "Назад", (1300, 900), (300, 80))]
     
     def _update_screen(self):
         self.screen.fill(self.bg_color)
         for index, surface in enumerate(self.strings_surfaces):
-            self.screen.blit(surface, self.text_positions[index])
+            self.screen.blit(surface, self.text_positions[index] * self.scale)
 
 
         for index, picture in enumerate(self.pictures):

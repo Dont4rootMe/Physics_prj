@@ -1,22 +1,28 @@
 import pygame
 import numpy as np
 class Graph:
-    def __init__(self, app, values, position, size, active_filling, name, color, height=1) -> None:
+    def __init__(self, app, values, position, size, active_filling, name, color, height=1, right=False, result=False) -> None:
         self.app = app
         self.color = color
         self.screen = app.screen
         self.scale = app.scale
         self.position = position
         self.font = 'Corbel'
-        self.graph_font = pygame.font.SysFont('couriernew', 28)
+        self.graph_font = pygame.font.SysFont('couriernew', int(30 * self.scale), bold=True)
         self.size = size
         self.number_of_values = len(values)
         self.active_filling = active_filling
         self.active_moving = False
         self.name = name
         self.reversed = False
-        self.little_font = pygame.font.SysFont(self.font, 32)
-        self.middle_font = pygame.font.SysFont(self.font, 40, bold=True)
+        if right:
+            self.xticks_color = (150, 0, 0)
+        elif result:
+            self.xticks_color = (0, 0, 0)
+        else:
+            self.xticks_color = (0, 150, 0)
+        self.little_font = pygame.font.SysFont(self.font, int(40 * self.scale))
+        self.middle_font = pygame.font.SysFont(self.font, int(50 * self.scale), bold=True)
         self.y_axis_coords = (self.position[0], self.position[1] - 20)
         self.x_axis_coords = (self.position[0], self.position[1] + self.size[1])
         self.vertical_delimeters_coords = [(self.position[0] + i * self.size[0] / self.number_of_values, self.position[1]) 
@@ -32,7 +38,7 @@ class Graph:
         self.number_of_labels = 20
         self.step = max(1, self.number_of_values // self.number_of_labels + (self.number_of_values % self.number_of_labels != 0))
         self.labels = [ i for i in range(0, self.number_of_values, self.step)]
-        self.xticks_surfaces = [pygame.transform.rotate(self.graph_font.render(str(self.xticks[i]), False, (0, 0, 0)), -90)
+        self.xticks_surfaces = [pygame.transform.rotate(self.graph_font.render(str(self.xticks[i]), False, self.xticks_color), -90)
                                 for i in self.labels]
         self.yticks_surfaces = [self.little_font.render(str(tick) + '-', False, (0, 0, 0)) for tick in self.yticks]
         self.arrow_surfaces = [self.middle_font.render(arrow, False, (0, 0, 0)) for arrow in ['>', '^']]
@@ -42,8 +48,8 @@ class Graph:
         self.columns_height = [0] * self.number_of_values
         for i in range(self.number_of_values):
             self.vertical_delimeters.append(pygame.Rect(*self.vertical_delimeters_coords[i], 1, self.size[1]))
-        self.yticks_position = [self.position[0] - (50 if len(tick) == 3 else 65) for tick in self.yticks]
-        self.arrows_position = [(self.position[0] + self.size[0] + 35, self.position[1] + self.size[1] - 17), (self.position[0] - 8, self.position[1] - 27)]
+        self.yticks_position = [self.position[0] - (65 if len(tick) == 3 else 80) * self.scale for tick in self.yticks]
+        self.arrows_position = [(self.position[0] + self.size[0] + 30 / self.scale, self.position[1] + self.size[1] - 21.25 * self.scale), (self.position[0] - 11 * self.scale, self.position[1] - 30 * self.scale)]
         self.columns_x = [self.position[0] + index * self.size[0] / self.number_of_values for index in range(self.number_of_values)]
 
     def draw_graph(self):
@@ -58,8 +64,8 @@ class Graph:
         for index, surface in enumerate(strings_surfaces):
             self.screen.blit(surface, self.text_positions[index])
         for index, surface in enumerate(self.xticks_surfaces if not self.reversed else reversed(self.xticks_surfaces)):
-            self.screen.blit(surface, (self.columns_x[index * self.step] - 4, 
-                                       self.position[1] + self.size[1] + 15))
+            self.screen.blit(surface, (self.columns_x[index * self.step] + 0.5 * (self.size[0] / self.number_of_values - surface.get_rect().w), 
+                                       self.position[1] + self.size[1] + 15 + (40) * (self.color == (250, 0, 0, 10) and self.app.active_screen.active_summing) * self.scale))
 
         for index, surface in enumerate(self.yticks_surfaces):
             self.screen.blit(surface, (self.yticks_position[index], self.position[1] + self.size[1] - 15 - index * self.size[1] // 5))
@@ -123,7 +129,9 @@ class Graph:
         self.yticks_position = [self.position[0] + self.size[0] for i in range(len(self.yticks_position))]
         self.reversed = True
         self.arrow_surfaces = [self.middle_font.render(arrow, False, (0, 0, 0)) for arrow in ['<', '^']]
-        self.arrows_position = [(self.position[0] - 55, self.position[1] + self.size[1] - 17), (self.position[0] + self.size[0] - 13, self.position[1] - 27)]
+         #[(self.position[0] + self.size[0] + 30 / self.scale, self.position[1] + self.size[1] - 21.25 * self.scale), (self.position[0] - 11 * self.scale, self.position[1] - 23 * self.scale)]
+        self.arrows_position = [(self.position[0] - 55, self.position[1] + self.size[1] - 21.25 * self.scale), 
+                                (self.position[0] + self.size[0] - 15 * self.scale, self.position[1] - 29 * self.scale)]
         self.vertical_delimeters = []
         for i in range(self.number_of_values):
             self.vertical_delimeters.append(pygame.Rect(*self.vertical_delimeters_coords[i], 2, self.size[1]))
