@@ -9,10 +9,10 @@ class App:
         pygame.init()
         self.scale = pygame.display.Info().current_w / 1920
         self.screen = pygame.display.set_mode((1920 * self.scale, 1080 * self.scale))
+        self.russian = True
         self.menu_screen = MenuScreen(self)
         self.authors_screen = AuthorsScreen(self)
         self.demo_screen = DemoScreen(self)
-
         self.active_screen = self.menu_screen
         print(pygame.display.get_surface().get_size())
 

@@ -56,9 +56,9 @@ class Graph:
         strings_surfaces = []
         strings = []
         if self.active_filling:
-            strings.append(f"Гистограмма {self.name}. Задайте распределение")
+            strings.append(f"Гистограмма {self.name}. Задайте распределение" if self.app.russian else f"Histogram {self.name}. Enter distribution:")
         else:
-            strings.append(f"Гистограмма {self.name}.")
+            strings.append(f"Гистограмма {self.name}." if self.app.russian else f"Histogram {self.name}")
         for string in strings:
             strings_surfaces.append(self.little_font.render(string, False, (0, 0, 0)))
         for index, surface in enumerate(strings_surfaces):
@@ -110,7 +110,7 @@ class Graph:
 
     def __add__(self, graph):
         result_graph = Graph(self.app, sorted(list(set([i + j for i in self.xticks for j in graph.xticks]))), 
-                             (150, 600), (1000, 300), False, "суммы", 
+                             (150, 600), (1000, 300), False, "суммы" if self.app.russian else "of sum", 
                              [(self.color[i] + graph.color[i]) // 2 for i in range(4)])
         for i in range(self.number_of_values):
             for j in range(graph.number_of_values):

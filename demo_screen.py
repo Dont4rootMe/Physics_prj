@@ -15,7 +15,6 @@ class DemoScreen():
         self.speed = 0.5
         self.bg_color = (255, 255, 255)
         self.font = 'corbel'
-        self.input_text = 'Кол-во значений случайной величины:'
         self.little_font = pygame.font.SysFont(self.font, int(35 * self.app.scale))
         self.middle_font = pygame.font.SysFont(self.font, int(40 * self.app.scale), bold=True)
         self.big_font = pygame.font.SysFont(self.font, int(50 * self.app.scale))
@@ -27,39 +26,51 @@ class DemoScreen():
         self.result_graph = None
         self.active_summing = False
         self.step = 1
+        self.limit = 100
         self.pause = False
-        self.buttons = [Button(app, "Назад", (1300, 900), (250, 70), font_size=30), 
-                        Button(app, "Следующий шаг", (1300, 800), (250, 70), font_size=30),
-                        Button(app, "Перезапустить", (1600, 900), (250, 70), font_size=30),
-                        Button(app, "Пауза", (1600, 700), (250, 70), font_size=30),
-                        Button(app, "Формула", (1600, 600), (250, 70), font_size=30)]
         self.option_boxes_positions = ((500, 600), (1350, 600), (1600, 800))
-        self.show_formula = False
-        self.formula_image = pygame.transform.scale(pygame.image.load("CodeCogsEqn.png"), np.array((100 * 7.6, 100)) * self.scale)
+        self.buttons = [Button(self.app, "Назад" if self.app.russian else "Back", (1300, 900), (250, 70), font_size=30), 
+                        Button(self.app, "Следующий шаг" if self.app.russian else "Next step", (1300, 800), (250, 70), font_size=30),
+                        Button(self.app, "Перезапустить" if self.app.russian else "Reload", (1600, 900), (250, 70), font_size=30),
+                        Button(self.app, "Пауза" if self.app.russian else "Pause", (1600, 700), (250, 70), font_size=30),
+                        Button(self.app, "Формула" if self.app.russian else "Formula", (1600, 600), (250, 70), font_size=30),
+                        Button(self.app, "RUS/ENG", (1680, 1000), (170, 70), font_size=30)]
         self.option_boxes = [OptionBox(
-            *self.option_boxes_positions[0], 180, 60, (240, 240, 240), (100, 200, 255), 25, 
-            ["Шаблоны", "Равномерное"], app=app),
-                            OptionBox(
-            *self.option_boxes_positions[1], 180, 60, (240, 240, 240), (100, 200, 255), 25, 
-            ["Шаблоны", "Равномерное"], app=app),
-                            OptionBox(
-            *self.option_boxes_positions[2], 250, 70, (240, 240, 240), (100, 200, 255), 30,
-            ['Скорость', 'x1', 'x2', 'x4', 'x8'], app=app, back=True)
-        ]
-        self.input_text_surface = self.little_font.render(self.input_text,  False, (0, 0, 0))
-        self.input_boxes = [InputBox(700, 515, 140, 50, app), InputBox(1550, 515, 140, 50, app)]
+                                        *self.option_boxes_positions[0], 200, 60, (240, 240, 240), (100, 200, 255), 25, 
+                                        ["Шаблоны" if self.app.russian else "Templates", 
+                                         "Равномерное" if self.app.russian else "Uniform",
+                                         "Бернулли, p=0.1" if self.app.russian else "Bernulli, p=0.1",
+                                         '"Полосатое"' if self.app.russian else '"Striped"', 
+                                         '"Зубчатое"' if self.app.russian else '"toothed"'], app=self.app),
+                                                        OptionBox(
+                                        *self.option_boxes_positions[1], 200, 60, (240, 240, 240), (100, 200, 255), 25, 
+                                        ["Шаблоны" if self.app.russian else "Templates", 
+                                         "Равномерное" if self.app.russian else "Uniform",
+                                         "Бернулли, p=0.1" if self.app.russian else "Bernulli, p=0.1",
+                                         '"Полосатое"' if self.app.russian else '"Striped"', 
+                                         '"Зубчатое"' if self.app.russian else '"toothed"'], app=self.app),
+                                                        OptionBox(
+                                        *self.option_boxes_positions[2], 250, 70, (240, 240, 240), (100, 200, 255), 30,
+                                        ['Скорость' if self.app.russian else "Speed", 'x1', 'x2', 'x4', 'x8'], app=self.app, back=True)
+                                    ]
+        self.checkbox_text = self.little_font.render("Дублировать 1-е распределение:" if self.app.russian else "Duplicate 1-st distribution:", False, (0, 0, 0))
+        self.checkbox2_text = self.little_font.render("Показать распределение Гаусса:" if self.app.russian else "Show Gauss distribution:", False, (0, 0, 0))
+        self.input_boxes = [InputBox(700, 515, 140, 50, self.app) if self.app.russian else InputBox(600, 515, 140, 50, self.app), 
+                InputBox(1550, 515, 140, 50, self.app) if self.app.russian else InputBox(1450, 515, 140, 50, self.app)]
+        self.checkbox = Button(self.app, '✖', (1460, 685) if self.app.russian else (1330, 685), (60, 60), font_size=30, font='SegoeUISymbol')
 
-        self.distr_text = self.little_font.render("Типовые распределения:", False, (0, 0, 0))
+        self.show_formula = False
+        self.formula_image = pygame.transform.scale(pygame.image.load("CodeCogsEqn.png"), np.array((380, 100)) * self.scale)
 
-        self.checkbox_text = self.little_font.render("Дублировать 1-е распределение:", False, (0, 0, 0))
-        self.checkbox = Button(self.app, '✖', (1460, 685), (60, 60), font_size=30, font='SegoeUISymbol')
-        self.checkbox2_text = self.little_font.render("Показать распределение Гаусса:", False, (0, 0, 0))
+        self.distr_text = self.little_font.render("Типовые распределения:" if self.app.russian else "Typical distributions:", False, (0, 0, 0))
+
         self.checkbox_2 = Button(self.app, '✖', (1100, 620), (60, 60), font_size=30, font='SegoeUISymbol')
         self.time_check = time.time()
         self.norm_img = pygame.transform.scale(pygame.image.load("norm.png"), np.array((420, 300)) * self.scale)
         self.show_norm = False
 
     def _update_screen(self):
+        self.input_text_surface = self.little_font.render('Кол-во значений случайной величины:' if self.app.russian else "Number of random variable values:",  False, (0, 0, 0))
         self.screen.fill(self.bg_color)
         for button in self.buttons:
             button.draw_button()
@@ -82,17 +93,19 @@ class DemoScreen():
             self.checkbox.draw_button()
         
         if self.result_graph:
-            self.screen.blit(self.checkbox2_text, np.array((600, 630)) * self.scale)
+            self.screen.blit(self.checkbox2_text, np.array((600, 630) if self.app.russian else (750, 630)) * self.scale)
             self.checkbox_2.draw_button()
         
         if self.show_formula:
-            self.screen.blit(self.formula_image, np.array((840, 585)) * self.scale)
+            self.screen.blit(self.formula_image, np.array((1220, 585)) * self.scale)
         
         for index, graph in enumerate((self.left_graph, self.right_graph)):
             if graph.active_filling:
                 self.option_boxes[index].draw(self.screen)
-        self.step_text = self.little_font.render(f"Шаг: {self.step}", False, (0, 0, 0))
-        self.step_left_text = self.little_font.render(f"Шагов доступно: {max(0, 20 - self.step)}", False, (0, 0, 0))
+        self.step_text = self.little_font.render(f"Шаг: {self.step}" if self.app.russian else f"Step: {self.step}", False, (0, 0, 0))
+        if (np.array(self.left_graph.columns_height) != 0).sum():
+            self.limit = round(200 / (np.array(self.left_graph.columns_height) != 0).sum())
+        self.step_left_text = self.little_font.render(f"Шагов доступно: {max(0, self.limit - self.step)}" if self.app.russian else f"Steps available: {max(0, 20 - self.step)}", False, (0, 0, 0))
         if self.result_graph:
             self.screen.blit(self.step_text, np.array((1600, 20)) * self.scale)
             self.screen.blit(self.step_left_text, np.array((1600, 60)) * self.scale)
@@ -133,7 +146,7 @@ class DemoScreen():
                                             self.graph_size, True, str(1), (250, 0, 0, 10), right=True)
                     
                     
-        self.speed = 1/4 if self.option_boxes[2].selected < 2 else (self.option_boxes[2].selected + 1) / 4
+        self.speed = 1/4 if self.option_boxes[2].selected < 2 else (self.option_boxes[2].selected + 1) / 2 * (1.3 - self.step / self.limit)
         self.option_boxes[2].update(events)
 
         for index, graph in enumerate((self.left_graph, self.right_graph)):
@@ -142,6 +155,33 @@ class DemoScreen():
                 if self.option_boxes[index].selected == 1:
                     graph.columns_height = [1 / len(graph.xticks) for i in range(len(graph.xticks))]
                     graph.active_filling = False
+                elif self.option_boxes[index].selected == 2:
+                    if index == 0:
+                        self.left_graph = Graph(self.app, [0, 1], graph.position, graph.size, False, str(1), (0, 250, 0, 10))
+                        self.left_graph.columns_height = [0.9, 0.1]
+                        self.left_graph.active_filling = False
+                    else:
+                        self.right_graph = Graph(self.app, [0, 1], graph.position, graph.size, False, str(1), (250, 0, 0, 10), right=True)
+                        self.right_graph.columns_height = [0.9, 0.1]
+                        self.right_graph.active_filling = False
+                elif self.option_boxes[index].selected == 3:
+                    if index == 0:
+                        self.left_graph = Graph(self.app, [i for i in range(10)], graph.position, graph.size, False, str(1), (0, 250, 0, 10))
+                        self.left_graph.columns_height = [0.25, 0, 0, 0.25, 0, 0, 0.25, 0, 0, 0.25]
+                        self.left_graph.active_filling = False
+                    else:
+                        self.right_graph = Graph(self.app, [i for i in range(10)], graph.position, graph.size, False, str(1), (250, 0, 0, 10), right=True)
+                        self.right_graph.columns_height = [0.25, 0, 0, 0.25, 0, 0, 0.25, 0, 0, 0.25]
+                        self.right_graph.active_filling = False
+                elif self.option_boxes[index].selected == 4:
+                    if index == 0:
+                        self.left_graph = Graph(self.app, [i for i in range(4)], graph.position, graph.size, False, str(1), (0, 250, 0, 10))
+                        self.left_graph.columns_height = [0.47, 0.03, 0.03, 0.47]
+                        self.left_graph.active_filling = False
+                    else:
+                        self.right_graph = Graph(self.app, [i for i in range(4)], graph.position, graph.size, False, str(1), (250, 0, 0, 10), right=True)
+                        self.right_graph.columns_height = [0.47, 0.03, 0.03, 0.47]
+                        self.right_graph.active_filling = False
                 if graph == self.left_graph and self.checkbox.active:
                     self.right_graph.xticks = self.left_graph.xticks
                     self.right_graph.columns_height = self.left_graph.columns_height.copy()
@@ -155,7 +195,7 @@ class DemoScreen():
             if button.rect.collidepoint(mouse_position):
                 if index == 0:
                     self.app.active_screen = self.app.menu_screen
-                if index == 1:
+                if index == 1 and self.step < self.limit:
                     self.start_new_lap()
                 if index == 2:
                     self.reset()
@@ -170,6 +210,38 @@ class DemoScreen():
                     button._prep_msg('Пауза')
                 if index == 4:
                     self.show_formula = not self.show_formula
+                if index == 5:
+                    self.app.russian = not self.app.russian
+                    self.buttons = [Button(self.app, "Назад" if self.app.russian else "Back", (1300, 900), (250, 70), font_size=30), 
+                        Button(self.app, "Следующий шаг" if self.app.russian else "Next step", (1300, 800), (250, 70), font_size=30),
+                        Button(self.app, "Перезапустить" if self.app.russian else "Reload", (1600, 900), (250, 70), font_size=30),
+                        Button(self.app, "Пауза" if self.app.russian else "Pause", (1600, 700), (250, 70), font_size=30),
+                        Button(self.app, "Формула" if self.app.russian else "Formula", (1600, 600), (250, 70), font_size=30),
+                        Button(self.app, "RUS/ENG", (1680, 1000), (170, 70), font_size=30)]
+                    self.option_boxes = [OptionBox(
+                                        *self.option_boxes_positions[0], 200, 60, (240, 240, 240), (100, 200, 255), 25, 
+                                        ["Шаблоны" if self.app.russian else "Templates", 
+                                         "Равномерное" if self.app.russian else "Uniform",
+                                         "Бернулли, p=0.1" if self.app.russian else "Bernulli, p=0.1",
+                                         '"Полосатое"' if self.app.russian else '"Striped"', 
+                                         '"Зубчатое"' if self.app.russian else '"toothed"'], app=self.app),
+                                                        OptionBox(
+                                        *self.option_boxes_positions[1], 200, 60, (240, 240, 240), (100, 200, 255), 25, 
+                                        ["Шаблоны" if self.app.russian else "Templates", 
+                                         "Равномерное" if self.app.russian else "Uniform",
+                                         "Бернулли, p=0.1" if self.app.russian else "Bernulli, p=0.1",
+                                         '"Полосатое"' if self.app.russian else '"Striped"', 
+                                         '"Зубчатое"' if self.app.russian else '"toothed"'], app=self.app),
+                                                        OptionBox(
+                                        *self.option_boxes_positions[2], 250, 70, (240, 240, 240), (100, 200, 255), 30,
+                                        ['Скорость' if self.app.russian else "Speed", 'x1', 'x2', 'x4', 'x8'], app=self.app, back=True)
+                                    ]
+                    self.checkbox_text = self.little_font.render("Дублировать 1-е распределение:" if self.app.russian else "Duplicate 1-st distribution:", False, (0, 0, 0))
+                    self.checkbox2_text = self.little_font.render("Показать распределение Гаусса:" if self.app.russian else "Show Gauss distribution:", False, (0, 0, 0))
+                    self.input_boxes = [InputBox(700, 515, 140, 50, self.app) if self.app.russian else InputBox(600, 515, 140, 50, self.app), 
+                            InputBox(1550, 515, 140, 50, self.app) if self.app.russian else InputBox(1450, 515, 140, 50, self.app)]
+                    self.checkbox = Button(self.app, '✖', (1460, 685) if self.app.russian else (1330, 685), (60, 60), font_size=30, font='SegoeUISymbol')
+                    self.distr_text = self.little_font.render("Типовые распределения:" if self.app.russian else "Typical distributions:", False, (0, 0, 0))
 
         if self.checkbox.rect.collidepoint(mouse_position):
             if not self.checkbox.active:
@@ -231,7 +303,7 @@ class DemoScreen():
     def build_result_graph_plot(self):
         distribution = self.build_distribution()
         return Graph(self.app, list(range(0, max(distribution.keys()) + 1)), 
-                             np.array((150, 700)) * self.scale, np.array((1000, 300)) * self.scale, False, "суммы", 
+                             np.array((150, 700)) * self.scale, np.array((1000, 300)) * self.scale, False, "суммы" if self.app.russian else "of sum", 
                              (100, 100, 100), height=max(distribution.values()), result=True)
 
     def build_distribution(self):
@@ -269,7 +341,7 @@ class DemoScreen():
         if self.result_graph is None or sum(self.result_graph.columns_height) < 0.99:
             return
         self.step += 1
-        self.right_graph = Graph(self.app, self.result_graph.xticks, self.right_graph_position, self.graph_size, False, "суммы", (250, 0, 0, 10), right=True)
+        self.right_graph = Graph(self.app, self.result_graph.xticks, self.right_graph_position, self.graph_size, False, "суммы" if self.app.russian else "of sum", (250, 0, 0, 10), right=True)
         self.right_graph.columns_height = self.result_graph.columns_height
         self.right_graph.move(self.right_graph_position)
         self.right_graph.size = self.graph_size
