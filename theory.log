@@ -1,6 +1,6 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.25 (MiKTeX 23.10.12) (preloaded format=pdflatex 2023.11.23)  24 NOV 2023 11:54
+This is pdfTeX, Version 3.141592653-2.6-1.40.25 (MiKTeX 23.10.12) (preloaded format=pdflatex 2023.11.23)  3 DEC 2023 21:23
 entering extended mode
- restricted \write18 enabled.
+ \write18 enabled.
  file:line:error style messages enabled.
  %&-line parsing enabled.
 **c:/Physics_prj/theory.tex
@@ -521,16 +521,6 @@ File: epstopdf-sys.cfg 2021/03/18 v2.0 Configuration of epstopdf for MiKTeX
 * \@reversemarginfalse
 * (1in=72.27pt=25.4mm, 1cm=28.453pt)
 
-
-Underfull \hbox (badness 10000) in paragraph at lines 35--36
-\T2A/cmr/m/n/10 завершаетс€, когда сумма веро€тностей заданных
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 37--38
-[]\T2A/cmr/m/n/10 Ќачинаетс€ процесс суммировани€ случайных
- []
-
 LaTeX Font Info:    Trying to load font information for U+msa on input line 38.
 (C:\Users\Profe\AppData\Local\Programs\MiKTeX\tex/latex/amsfonts\umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
@@ -539,117 +529,68 @@ LaTeX Font Info:    Trying to load font information for U+msb on input line 38.
  (C:\Users\Profe\AppData\Local\Programs\MiKTeX\tex/latex/amsfonts\umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 )
-Underfull \hbox (badness 10000) in paragraph at lines 45--47
-[]\T2A/cmr/m/n/10 Ётот процесс можно повтор€ть несколько раз,
+Overfull \hbox (6.11597pt too wide) in paragraph at lines 40--42
+\T2A/cmr/m/n/10 верности построени€ графика суммы). ƒополнительно по кнопке можно отобразить формулу дл€ суммы распределений. 
  []
 
 LaTeX Font Info:    Trying to load font information for U+dsrom on input line 49.
 (C:\Users\Profe\AppData\Local\Programs\MiKTeX\tex/latex/doublestroke\udsrom.fd
 File: Udsrom.fd 1995/08/01 v0.1 Double stroke roman font definitions
 )
-Underfull \hbox (badness 7030) in paragraph at lines 49--50
-\T2A/cmr/m/n/10 множество всех значений, принимаемых случайной
+Overfull \hbox (8.4765pt too wide) in paragraph at lines 59--60
+\T2A/cmr/m/n/10 также в нем должен присутствовать эффект случайности. ¬ведем основное пон€тие теории веро€тностей ^^V  олмогорову
  []
 
 
-Underfull \hbox (badness 6592) in paragraph at lines 59--60
-[]\T2A/cmr/m/n/10 ¬ведем все нужные дл€ дальнейших выкладок
+Overfull \hbox (13.74124pt too wide) in paragraph at lines 59--60
+\T2A/cmr/m/n/10 элемент $\OML/cmm/m/it/10 !$ \T2A/cmr/m/n/10 называетс€ элементарным исходом. Ѕудем рассматривать множество $\OMS/cmsy/m/n/10 A$ \T2A/cmr/m/n/10 как множество различных подмножеств
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 66--67
-[]\T2A/cmr/m/n/10 “огда пару $\OT1/cmr/m/n/10 (
-\OML/cmm/m/it/10 ; \OMS/cmsy/m/n/10 A\OT1/cmr/m/n/10 )$ \T2A/cmr/m/n/10 будем называть измеримым
+Overfull \hbox (5.54004pt too wide) in paragraph at lines 59--60
+\T2A/cmr/m/n/10 множества $\OT1/cmr/m/n/10 
+$\T2A/cmr/m/n/10 , дл€ которого выполн€ютс€ услови€ на $\OML/cmm/m/it/10 ^^[$\T2A/cmr/m/n/10 -алгебру. Ќад элементами множества $\OMS/cmsy/m/n/10 A$ \T2A/cmr/m/n/10 определим веро€тностную
  []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 66--67
-\T2A/cmr/m/n/10 пространством, определение которого состоит из
- []
-
-
-LaTeX Warning: Command \textless invalid in math mode on input line 69.
-
-
-LaTeX Warning: Command \textless invalid in math mode on input line 69.
 
 [1
 
 {C:/Users/Profe/AppData/Local/MiKTeX/fonts/map/pdftex/pdftex.map}]
-Overfull \hbox (5.81325pt too wide) in paragraph at lines 71--71
-[]\T2A/cmr/bx/n/14.4 ѕереход к дискретным случайным
- []
+
+LaTeX Warning: Command \textless invalid in math mode on input line 69.
+
+
+LaTeX Warning: Command \textless invalid in math mode on input line 69.
 
 
 LaTeX Warning: Command \textless invalid in math mode on input line 82.
 
-
-Underfull \hbox (badness 10000) in paragraph at lines 82--82
-\T2A/cmr/m/n/10 множества $\OT1/cmr/m/n/10 
-$ \T2A/cmr/m/n/10 на совместно не пересекающиес€
+[2]
+Overfull \hbox (2.12796pt too wide) in paragraph at lines 106--108
+\T2A/cmr/m/n/10 ѕричем суммирование проводитс€ по такому разбиению начального множества $\OT1/cmr/m/n/10 
+$\T2A/cmr/m/n/10 , что каждое подмножество множество
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 82--82
-\T2A/cmr/m/n/10 подмножества можно представить в виде суммы
+Overfull \hbox (3.84799pt too wide) in paragraph at lines 116--117
+\T2A/cmr/m/n/10 приходитс€ говорить не только о независимости в совокупности случайных величин из одного измеримого пространства,
  []
 
-
-Overfull \hbox (9.48015pt too wide) in paragraph at lines 84--84
-[]\T2A/cmr/bx/n/14.4 Ќезависимые случайные величины 
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 88--89
-\T2A/cmr/m/n/10 “еперь мы готовы описать аппарат, сто€щий за
- []
-
-
-Overfull \hbox (6.32466pt too wide) detected at line 103
-\OML/cmm/m/it/10 P\OT1/cmr/m/n/10 (\U/dsrom/m/n/10 1[] \OT1/cmr/m/n/10 = 1) = \OML/cmm/m/it/10 P\OT1/cmr/m/n/10 (\OML/cmm/m/it/10 ^^X[]\OT1/cmr/m/n/10 (\OML/cmm/m/it/10 !\OT1/cmr/m/n/10 ) = \OML/cmm/m/it/10 x[]\OT1/cmr/m/n/10 )\OML/cmm/m/it/10 P\OT1/cmr/m/n/10 (\OML/cmm/m/it/10 ^^X[]\OT1/cmr/m/n/10 (\OML/cmm/m/it/10 !\OT1/cmr/m/n/10 ) = \OML/cmm/m/it/10 y[]\OT1/cmr/m/n/10 )
- []
-
-
-Overfull \hbox (5.60884pt too wide) in paragraph at lines 109--114
- [] 
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 119--120
-\T2A/cmr/m/n/10 величина может быть представлена как сумма
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 119--120
-\T2A/cmr/m/n/10 распределений, что и результирующа€ случайна€
- []
-
-
-Underfull \hbox (badness 5696) in paragraph at lines 119--120
-\T2A/cmr/m/n/10 величина, то така€ величина называетс€ делимой.
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 121--122
-\T2A/cmr/m/n/10 распределени€ $\OT1/cmr/m/n/10 ^^H(\OML/cmm/m/it/10 x\OT1/cmr/m/n/10 )$ \T2A/cmr/m/n/10 с конечной дисперсией была
- []
-
-[2] [3] (theory.aux)
+[3] (theory.aux)
  ***********
 LaTeX2e <2023-11-01>
 L3 programming layer <2023-11-09>
  ***********
  ) 
 Here is how much of TeX's memory you used:
- 4601 strings out of 474587
- 71161 string characters out of 5745693
- 1947558 words of memory out of 5000000
- 26722 multiletter control sequences out of 15000+600000
+ 4599 strings out of 474587
+ 71099 string characters out of 5745693
+ 1941558 words of memory out of 5000000
+ 26720 multiletter control sequences out of 15000+600000
  566129 words of font info for 55 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 61i,13n,69p,1640b,268s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 61i,13n,69p,1640b,204s stack positions out of 10000i,1000n,20000p,200000b,200000s
  <C:\Users\Profe\AppData\Local\MiKTeX\fonts/pk/ljfour/lh/lh-t2a/dpi600\labx1000.pk> <C:\Users\Profe\AppData\Local\MiKTeX\fonts/pk/ljfour/lh/lh-t2a/dpi600\lati1000.pk> <C:\Users\Profe\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\tcrm1000.pk> <C:\Users\Profe\AppData\Local\MiKTeX\fonts/pk/ljfour/lh/lh-t2a/dpi600\larm1000.pk> <C:\Users\Profe\AppData\Local\MiKTeX\fonts/pk/ljfour/lh/lh-t2a/dpi600\labx1440.pk> <C:\Users\Profe\AppData\Local\MiKTeX\fonts/pk/ljfour/lh/lh-t2a/dpi600\labx2488.pk><C:/Users/Profe/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmex10.pfb><C:/Users/Profe/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi10.pfb><C:/Users/Profe/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi5.pfb><C:/Users/Profe/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi7.pfb><C:/Users/Profe/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr10.pfb><C:/Users/Profe/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr5.pfb><C:/Users/Profe/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr7.pfb><C:/Users/Profe/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy10.pfb><C:/Users/Profe/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy7.pfb><C:/Users/Profe/AppData/Local/Programs/MiKTeX/fonts/type1/public/doublestroke/dsrom10.pfb><C:/Users/Profe/AppData/Local/Programs/MiKTeX/fonts/type1/public/doublestroke/dsrom8.pfb><C:/Users/Profe/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/symbols/msam10.pfb><C:/Users/Profe/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/symbols/msbm10.pfb>
-Output written on theory.pdf (3 pages, 194856 bytes).
+Output written on theory.pdf (3 pages, 194793 bytes).
 PDF statistics:
  265 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)

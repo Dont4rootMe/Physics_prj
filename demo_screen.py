@@ -26,7 +26,7 @@ class DemoScreen():
         self.result_graph = None
         self.active_summing = False
         self.step = 1
-        self.limit = 100
+        self.limit = 200
         self.pause = False
         self.option_boxes_positions = ((500, 600), (1350, 600), (1600, 800))
         self.buttons = [Button(self.app, "Назад" if self.app.russian else "Back", (1300, 900), (250, 70), font_size=30), 
@@ -68,6 +68,7 @@ class DemoScreen():
         self.time_check = time.time()
         self.norm_img = pygame.transform.scale(pygame.image.load("norm.png"), np.array((420, 300)) * self.scale)
         self.show_norm = False
+        self.resize = True
 
     def _update_screen(self):
         self.input_text_surface = self.little_font.render('Кол-во значений случайной величины:' if self.app.russian else "Number of random variable values:",  False, (0, 0, 0))
@@ -103,9 +104,9 @@ class DemoScreen():
             if graph.active_filling:
                 self.option_boxes[index].draw(self.screen)
         self.step_text = self.little_font.render(f"Шаг: {self.step}" if self.app.russian else f"Step: {self.step}", False, (0, 0, 0))
-        if (np.array(self.left_graph.columns_height) != 0).sum():
-            self.limit = round(200 / (np.array(self.left_graph.columns_height) != 0).sum())
-        self.step_left_text = self.little_font.render(f"Шагов доступно: {max(0, self.limit - self.step)}" if self.app.russian else f"Steps available: {max(0, 20 - self.step)}", False, (0, 0, 0))
+        if self.resize:
+            self.limit = round(200 / max(self.left_graph.number_of_values, self.right_graph.number_of_values))
+        self.step_left_text = self.little_font.render(f"Шагов доступно: {max(0, self.limit - self.step)}" if self.app.russian else f"Steps available: {max(0, self.limit - self.step)}", False, (0, 0, 0))
         if self.result_graph:
             self.screen.blit(self.step_text, np.array((1600, 20)) * self.scale)
             self.screen.blit(self.step_left_text, np.array((1600, 60)) * self.scale)
@@ -114,6 +115,23 @@ class DemoScreen():
             self.screen.blit(self.norm_img, np.array((440, 700)) * self.scale)
 
         if self.active_summing:
+            if self.resize:
+                maxx = max(self.right_graph.number_of_values, self.left_graph.number_of_values)
+                diff = maxx - self.right_graph.number_of_values
+                diff2 = maxx - self.left_graph.number_of_values
+                old_cols = self.right_graph.columns_height
+                old_name = self.right_graph.name
+                self.right_graph = Graph(self.app, [i for i in range(maxx)], self.right_graph_position, self.graph_size, False, old_name, (250, 0, 0, 10), right=True)
+                self.right_graph.columns_height = old_cols
+                for _ in range(diff):
+                    self.right_graph.columns_height.append(0)
+                old_cols = self.left_graph.columns_height
+                old_name = self.left_graph.name
+                self.left_graph = Graph(self.app, [i for i in range(maxx)], self.left_graph_position, self.graph_size, False, old_name, (0, 250, 0, 10), right=False)
+                self.left_graph.columns_height = old_cols
+                for _ in range(diff2):
+                    self.left_graph.columns_height.append(0)
+                self.resize = False
             self.summing_process()
         
     def _check_events(self):
@@ -212,6 +230,10 @@ class DemoScreen():
                     self.show_formula = not self.show_formula
                 if index == 5:
                     self.app.russian = not self.app.russian
+                    for graph in (self.right_graph, self.result_graph):
+                        if graph and not graph.name.isdigit():
+                            graph.name = 'суммы' if self.app.russian else 'of sum'
+                    
                     self.buttons = [Button(self.app, "Назад" if self.app.russian else "Back", (1300, 900), (250, 70), font_size=30), 
                         Button(self.app, "Следующий шаг" if self.app.russian else "Next step", (1300, 800), (250, 70), font_size=30),
                         Button(self.app, "Перезапустить" if self.app.russian else "Reload", (1600, 900), (250, 70), font_size=30),
@@ -219,20 +241,20 @@ class DemoScreen():
                         Button(self.app, "Формула" if self.app.russian else "Formula", (1600, 600), (250, 70), font_size=30),
                         Button(self.app, "RUS/ENG", (1680, 1000), (170, 70), font_size=30)]
                     self.option_boxes = [OptionBox(
-                                        *self.option_boxes_positions[0], 200, 60, (240, 240, 240), (100, 200, 255), 25, 
+                                        *(self.option_boxes_positions[0][0] - 100 * (not self.app.russian), self.option_boxes_positions[0][1]), 200, 60, (240, 240, 240), (100, 200, 255), 25, 
                                         ["Шаблоны" if self.app.russian else "Templates", 
                                          "Равномерное" if self.app.russian else "Uniform",
                                          "Бернулли, p=0.1" if self.app.russian else "Bernulli, p=0.1",
                                          '"Полосатое"' if self.app.russian else '"Striped"', 
-                                         '"Зубчатое"' if self.app.russian else '"toothed"'], app=self.app),
-                                                        OptionBox(
-                                        *self.option_boxes_positions[1], 200, 60, (240, 240, 240), (100, 200, 255), 25, 
+                                         '"Зубчатое"' if self.app.russian else '"Toothed"'], app=self.app),
+                                        OptionBox(
+                                        *(self.option_boxes_positions[1][0] - 100 * (not self.app.russian), self.option_boxes_positions[1][1]), 200, 60, (240, 240, 240), (100, 200, 255), 25, 
                                         ["Шаблоны" if self.app.russian else "Templates", 
                                          "Равномерное" if self.app.russian else "Uniform",
                                          "Бернулли, p=0.1" if self.app.russian else "Bernulli, p=0.1",
                                          '"Полосатое"' if self.app.russian else '"Striped"', 
-                                         '"Зубчатое"' if self.app.russian else '"toothed"'], app=self.app),
-                                                        OptionBox(
+                                         '"Зубчатое"' if self.app.russian else '"Toothed"'], app=self.app),
+                                        OptionBox(
                                         *self.option_boxes_positions[2], 250, 70, (240, 240, 240), (100, 200, 255), 30,
                                         ['Скорость' if self.app.russian else "Speed", 'x1', 'x2', 'x4', 'x8'], app=self.app, back=True)
                                     ]
@@ -359,6 +381,7 @@ class DemoScreen():
         self.left_graph = Graph(self.app, [i for i in range(10)], self.left_graph_position, self.graph_size, True, str(1), (0, 250, 0, 10))
         self.right_graph = Graph(self.app, [i for i in range(10)], self.right_graph_position, self.graph_size, True, str(2), (250, 0, 0, 10), right=True)
         self.result_graph = None
+        self.resize = True
         self.active_summing = False
         for box in self.option_boxes:
             box.selected = 0

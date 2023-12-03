@@ -1,6 +1,6 @@
 # Fdb version 4
-["pdflatex"] 1700816041 "c:/Physics_prj/theory.tex" "theory.pdf" "theory" 1700816042 0
-  "C:/Users/Profe/AppData/Local/MiKTeX/fonts/map/pdftex/pdftex.map" 1700813845 81068 299f700eb05b1217173e62b88b513bd0 ""
+["pdflatex"] 1701627834 "c:/Physics_prj/theory.tex" "theory.pdf" "theory" 1701627835 0
+  "C:/Users/Profe/AppData/Local/MiKTeX/fonts/map/pdftex/pdftex.map" 1701242321 81068 299f700eb05b1217173e62b88b513bd0 ""
   "C:/Users/Profe/AppData/Local/MiKTeX/fonts/pk/ljfour/jknappen/ec/dpi600/tcrm1000.pk" 1700813856 11548 fe37dfee09462182ea0c68564c53732a ""
   "C:/Users/Profe/AppData/Local/MiKTeX/fonts/pk/ljfour/lh/lh-t2a/dpi600/labx1000.pk" 1700813854 23468 58c4a42df5823fef06d8377dd4c2edb4 ""
   "C:/Users/Profe/AppData/Local/MiKTeX/fonts/pk/ljfour/lh/lh-t2a/dpi600/labx1440.pk" 1700767933 36852 5be22e58eeddd74675234fa130f6fa2a ""
@@ -77,9 +77,9 @@
   "C:/Users/Profe/AppData/Local/Programs/MiKTeX/tex/latex/kvsetkeys/kvsetkeys.sty" 1665066333 13815 760b0c02f691ea230f5359c4e1de23a7 ""
   "C:/Users/Profe/AppData/Local/Programs/MiKTeX/tex/latex/l3backend/l3backend-pdftex.def" 1699552361 29988 6d57d2b884f7464419678df319af86d2 ""
   "C:/Users/Profe/AppData/Local/Programs/MiKTeX/tex/latex/tools/multicol.sty" 1698867131 32515 51caec75eda9c8890135f12f1a4eddc3 ""
-  "c:/Physics_prj/theory.tex" 1700816041 20495 f82fce80858c6cad1c50d5e0790fdd9f ""
-  "theory.aux" 1700816042 1187 f67fa58724c835df1059350f858b726c "pdflatex"
-  "theory.tex" 1700816041 20495 f82fce80858c6cad1c50d5e0790fdd9f ""
+  "c:/Physics_prj/theory.tex" 1701627832 20462 83ec4aced5b149ce3cdd7604ca8f4069 ""
+  "theory.aux" 1701627835 1187 7e546259fe13f62b7e1ec6cf841e7d8c "pdflatex"
+  "theory.tex" 1701627832 20462 83ec4aced5b149ce3cdd7604ca8f4069 ""
   (generated)
   "theory.aux"
   "theory.log"

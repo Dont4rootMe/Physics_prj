@@ -73,7 +73,7 @@ class MenuScreen():
                 if index == 0:
                     self.app.active_screen = self.app.demo_screen
                 elif index == 1:
-                    webbrowser.open('theory.pdf')
+                    self.app.active_screen = self.app.theory_screen
                 if index == 2:
                     self.app.active_screen = self.app.authors_screen
                 elif index == 3:

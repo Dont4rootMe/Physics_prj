@@ -1104,6 +1104,7 @@
   ('textwrap',
    'C:\\Users\\Profe\\AppData\\Local\\Programs\\Python\\Python39\\lib\\textwrap.py',
    'PYMODULE'),
+  ('theory_screen', 'C:\\Physics_prj\\theory_screen.py', 'PYMODULE'),
   ('threading',
    'C:\\Users\\Profe\\AppData\\Local\\Programs\\Python\\Python39\\lib\\threading.py',
    'PYMODULE'),

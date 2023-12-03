@@ -4,6 +4,7 @@ from button import Button
 from menu_screen import MenuScreen
 from authors_screen import AuthorsScreen
 from demo_screen import DemoScreen
+from theory_screen import TheoryScreen
 class App:
     def __init__(self):
         pygame.init()
@@ -13,6 +14,7 @@ class App:
         self.menu_screen = MenuScreen(self)
         self.authors_screen = AuthorsScreen(self)
         self.demo_screen = DemoScreen(self)
+        self.theory_screen = TheoryScreen(self)
         self.active_screen = self.menu_screen
         print(pygame.display.get_surface().get_size())
 
